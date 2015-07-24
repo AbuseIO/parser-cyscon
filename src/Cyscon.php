@@ -67,12 +67,6 @@ class Cyscon extends Parser
             preg_match_all('/([\w\-]+): (.*)[ ]*\r?\n/', $report, $regs);
             $fields = array_combine($regs[1], $regs[2]);
 
-            $infoBlob = [ ];
-
-            $fields['domain'] = preg_replace('/^www\./', '', $fields['domain']);
-
-            $fields['uri'] = parse_url($fields['uri'], PHP_URL_PATH);
-
             $columns = array_filter(config("{$configBase}.feeds.{$feedName}.fields"));
             if (count($columns) > 0) {
                 foreach ($columns as $column) {
@@ -80,11 +74,13 @@ class Cyscon extends Parser
                         return $this->failed(
                             "Required field ${column} is missing in the report or config is incorrect."
                         );
-                    } else {
-                        $infoBlob[$column] = $fields[$column];
                     }
                 }
             }
+
+            $fields['domain'] = preg_replace('/^www\./', '', $fields['domain']);
+
+            $fields['uri'] = parse_url($fields['uri'], PHP_URL_PATH);
 
             $event = [
                 'source'        => config("{$configBase}.parser.name"),
@@ -94,7 +90,7 @@ class Cyscon extends Parser
                 'class'         => config("{$configBase}.feeds.{$feedName}.class"),
                 'type'          => config("{$configBase}.feeds.{$feedName}.type"),
                 'timestamp'     => strtotime($fields['last_seen']),
-                'information'   => json_encode($infoBlob),
+                'information'   => json_encode($fields),
             ];
 
             $events[] = $event;
