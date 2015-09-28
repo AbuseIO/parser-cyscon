@@ -31,13 +31,13 @@ class Cyscon extends Parser
     {
         // Generalize the local config based on the parser class name.
         $reflect = new ReflectionClass($this);
-        $configBase = 'parsers.' . $reflect->getShortName();
+        $this->configBase = 'parsers.' . $reflect->getShortName();
 
         Log::info(
             get_class($this) . ': Received message from: ' .
             $this->parsedMail->getHeader('from') . " with subject: '" .
             $this->parsedMail->getHeader('subject') . "' arrived at parser: " .
-            config("{$configBase}.parser.name")
+            config("{$this->configBase}.parser.name")
         );
 
         $events = [ ];
@@ -48,49 +48,48 @@ class Cyscon extends Parser
             }
 
             // Handle aliasses first
-            $feedName = false;
-            foreach (config("{$configBase}.parser.aliases") as $alias => $real) {
+            $this->feedName = false;
+            foreach (config("{$this->configBase}.parser.aliases") as $alias => $real) {
                 if ($attachment->filename == "{$alias}-report.txt") {
-                    $feedName = $real;
+                    $this->feedName = $real;
                 }
             }
 
-            if (empty(config("{$configBase}.feeds.{$feedName}"))) {
-                return $this->failed("Detected feed '{$feedName}' is unknown.");
+            if (!$this->isKnownFeed()) {
+                return $this->failed(
+                    "Detected feed {$this->feedName} is unknown."
+                );
             }
 
-            if (config("{$configBase}.feeds.{$feedName}.enabled") !== true) {
+            if (!$this->isEnabledFeed()) {
                 continue;
             }
 
             $report = str_replace("\r", "", $attachment->getContent());
             preg_match_all('/([\w\-]+): (.*)[ ]*\r?\n/', $report, $regs);
-            $fields = array_combine($regs[1], $regs[2]);
+            $report = array_combine($regs[1], $regs[2]);
 
-            $columns = array_filter(config("{$configBase}.feeds.{$feedName}.fields"));
-            if (count($columns) > 0) {
-                foreach ($columns as $column) {
-                    if (!isset($fields[$column])) {
-                        return $this->failed(
-                            "Required field ${column} is missing in the report or config is incorrect."
-                        );
-                    }
-                }
+            if (!$this->hasRequiredFields($report)) {
+                return $this->failed(
+                    "Required field {$this->requiredField} is missing or the config is incorrect."
+                );
             }
 
-            $fields['domain'] = preg_replace('/^www\./', '', $fields['domain']);
+            $report = $this->applyFilters($report);
 
-            $fields['uri'] = parse_url($fields['uri'], PHP_URL_PATH);
+            $report['domain'] = preg_replace('/^www\./', '', $report['domain']);
+
+            $report['uri'] = parse_url($report['uri'], PHP_URL_PATH);
 
             $event = [
-                'source'        => config("{$configBase}.parser.name"),
-                'ip'            => $fields['ip'],
-                'domain'        => $fields['domain'],
-                'uri'           => $fields['uri'],
-                'class'         => config("{$configBase}.feeds.{$feedName}.class"),
-                'type'          => config("{$configBase}.feeds.{$feedName}.type"),
-                'timestamp'     => strtotime($fields['last_seen']),
-                'information'   => json_encode($fields),
+                'source'        => config("{$this->configBase}.parser.name"),
+                'ip'            => $report['ip'],
+                'domain'        => $report['domain'],
+                'uri'           => $report['uri'],
+                'class'         => config("{$this->configBase}.feeds.{$this->feedName}.class"),
+                'type'          => config("{$this->configBase}.feeds.{$this->feedName}.type"),
+                'timestamp'     => strtotime($report['last_seen']),
+                'information'   => json_encode($report),
             ];
 
             $events[] = $event;
