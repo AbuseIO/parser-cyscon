@@ -5,7 +5,7 @@ namespace AbuseIO\Parsers;
 class Cyscon extends Parser
 {
     /**
-     * Create a new Blocklistde instance
+     * Create a new Cyscon instance
      */
     public function __construct($parsedMail, $arfMail)
     {
