@@ -20,10 +20,23 @@ return [
             'MALICIOUS'     => 'Malicious',
             'EVIL'          => 'Evil',
             'SCAM'          => 'Scam',
+            'BLACKLISTED'   => 'Malware',
+            'SUSPICIOUS'    => 'Suspicious',
         ],
     ],
 
     'feeds' => [
+        'Suspicious' => [
+            'class'     => 'Compromised website',
+            'type'      => 'Info',
+            'enabled'   => true,
+            'fields'    => [
+                'ip',
+                'domain',
+                'last_seen',
+                'uri',
+            ],
+        ],
         'Spamvertized' => [
             'class'     => 'Compromised website',
             'type'      => 'Abuse',
