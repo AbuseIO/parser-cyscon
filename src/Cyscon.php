@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+use AbuseIO\Models\Incident;
 
 /**
  * Class Cyscon
@@ -54,16 +55,18 @@ class Cyscon extends Parser
 
                         $report['uri'] = parse_url($report['uri'], PHP_URL_PATH);
 
-                        $this->events[] = [
-                            'source'        => config("{$this->configBase}.parser.name"),
-                            'ip'            => $report['ip'],
-                            'domain'        => $report['domain'],
-                            'uri'           => $report['uri'],
-                            'class'         => config("{$this->configBase}.feeds.{$this->feedName}.class"),
-                            'type'          => config("{$this->configBase}.feeds.{$this->feedName}.type"),
-                            'timestamp'     => strtotime($report['last_seen']),
-                            'information'   => json_encode($report),
-                        ];
+                        $incident = new Incident();
+                        $incident->source      = config("{$this->configBase}.parser.name");
+                        $incident->source_id   = false;
+                        $incident->ip          = $report['ip'];
+                        $incident->domain      = $report['domain'];
+                        $incident->uri         = $report['uri'];
+                        $incident->class       = config("{$this->configBase}.feeds.{$this->feedName}.class");
+                        $incident->type        = config("{$this->configBase}.feeds.{$this->feedName}.type");
+                        $incident->timestamp   = strtotime($report['last_seen']);
+                        $incident->information = json_encode($report);
+
+                        $this->events[] = $incident;
                     }
                 } else { // Unable to build report
                     $this->warningCount++;
