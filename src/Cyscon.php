@@ -1,6 +1,7 @@
 <?php
 
 namespace AbuseIO\Parsers;
+
 use AbuseIO\Models\Incident;
 
 /**
@@ -48,7 +49,7 @@ class Cyscon extends Parser
                     $report = array_combine($matches[1], $matches[2]);
 
                     if ($this->hasRequiredFields($report) === true) {
-                        // Event has all requirements met, filter and add!
+                        // incident has all requirements met, filter and add!
                         $report = $this->applyFilters($report);
 
                         $report['domain'] = preg_replace('/^www\./', '', $report['domain']);
@@ -66,7 +67,7 @@ class Cyscon extends Parser
                         $incident->timestamp   = strtotime($report['last_seen']);
                         $incident->information = json_encode($report);
 
-                        $this->events[] = $incident;
+                        $this->incidents[] = $incident;
                     }
                 } else { // Unable to build report
                     $this->warningCount++;
