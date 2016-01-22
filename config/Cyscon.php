@@ -27,7 +27,7 @@ return [
 
     'feeds' => [
         'Suspicious' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Info',
             'enabled'   => true,
             'fields'    => [
@@ -38,7 +38,7 @@ return [
             ],
         ],
         'Spamvertized' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -50,7 +50,7 @@ return [
         ],
 
         'Malware' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -62,7 +62,7 @@ return [
         ],
 
         'Phishing' => [
-            'class'     => 'Phishing website',
+            'class'     => 'PHISING_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -74,7 +74,7 @@ return [
         ],
 
         'Defacement' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -86,7 +86,7 @@ return [
         ],
 
         'Malicious adware' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -98,7 +98,7 @@ return [
         ],
 
         'Fraud' => [
-            'class'     => 'Phishing website',
+            'class'     => 'PHISING_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -110,7 +110,7 @@ return [
         ],
 
         'Malicious' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -122,7 +122,7 @@ return [
         ],
 
         'Scam' => [
-            'class'     => 'Phishing website',
+            'class'     => 'PHISING_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
@@ -134,7 +134,7 @@ return [
         ],
 
         'Evil' => [
-            'class'     => 'Compromised website',
+            'class'     => 'COMPROMISED_WEBSITE',
             'type'      => 'Abuse',
             'enabled'   => true,
             'fields'    => [
