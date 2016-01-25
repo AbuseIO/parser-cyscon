@@ -28,7 +28,7 @@ return [
     'feeds' => [
         'Suspicious' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Info',
+            'type'      => 'INFO',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -39,7 +39,7 @@ return [
         ],
         'Spamvertized' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -51,7 +51,7 @@ return [
 
         'Malware' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -63,7 +63,7 @@ return [
 
         'Phishing' => [
             'class'     => 'PHISING_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -75,7 +75,7 @@ return [
 
         'Defacement' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -87,7 +87,7 @@ return [
 
         'Malicious adware' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -99,7 +99,7 @@ return [
 
         'Fraud' => [
             'class'     => 'PHISING_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -111,7 +111,7 @@ return [
 
         'Malicious' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -123,7 +123,7 @@ return [
 
         'Scam' => [
             'class'     => 'PHISING_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
@@ -135,7 +135,7 @@ return [
 
         'Evil' => [
             'class'     => 'COMPROMISED_WEBSITE',
-            'type'      => 'Abuse',
+            'type'      => 'ABUSE',
             'enabled'   => true,
             'fields'    => [
                 'ip',
