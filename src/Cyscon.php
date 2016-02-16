@@ -52,16 +52,12 @@ class Cyscon extends Parser
                         // incident has all requirements met, filter and add!
                         $report = $this->applyFilters($report);
 
-                        $report['domain'] = preg_replace('/^www\./', '', $report['domain']);
-
-                        $report['uri'] = parse_url($report['uri'], PHP_URL_PATH);
-
                         $incident = new Incident();
                         $incident->source      = config("{$this->configBase}.parser.name");
                         $incident->source_id   = false;
                         $incident->ip          = $report['ip'];
-                        $incident->domain      = $report['domain'];
-                        $incident->uri         = $report['uri'];
+                        $incident->domain      = getDomain($report['Url']);
+                        $incident->uri         = getUri($report['Url']);
                         $incident->class       = config("{$this->configBase}.feeds.{$this->feedName}.class");
                         $incident->type        = config("{$this->configBase}.feeds.{$this->feedName}.type");
                         $incident->timestamp   = strtotime($report['last_seen']);
