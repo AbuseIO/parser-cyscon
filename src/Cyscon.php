@@ -56,8 +56,8 @@ class Cyscon extends Parser
                         $incident->source      = config("{$this->configBase}.parser.name");
                         $incident->source_id   = false;
                         $incident->ip          = $report['ip'];
-                        $incident->domain      = getDomain($report['Url']);
-                        $incident->uri         = getUri($report['Url']);
+                        $incident->domain      = getDomain($report['uri']);
+                        $incident->uri         = getUri($report['uri']);
                         $incident->class       = config("{$this->configBase}.feeds.{$this->feedName}.class");
                         $incident->type        = config("{$this->configBase}.feeds.{$this->feedName}.type");
                         $incident->timestamp   = strtotime($report['last_seen']);
