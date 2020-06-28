@@ -29,13 +29,13 @@ class Cyscon extends Parser
     public function parse()
     {
         foreach ($this->parsedMail->getAttachments() as $attachment) {
-            if (strpos($attachment->filename, '-report.txt') === false) {
+            if (strpos($attachment->getFilename(), '-report.txt') === false) {
                 continue;
             }
 
             // Handle aliasses first
             foreach (config("{$this->configBase}.parser.aliases") as $alias => $real) {
-                if ($attachment->filename == "{$alias}-report.txt") {
+                if ($attachment->getFilename() == "{$alias}-report.txt") {
                     $this->feedName = $real;
                     break;
                 }
